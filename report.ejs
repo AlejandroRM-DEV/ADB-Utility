@@ -23,24 +23,13 @@
 					<li class="list-group-item d-flex justify-content-between align-items-start">
 						<div class="ms-2 me-auto">
 							<div class="fw-bold">Fecha y hora de inicio</div>
-							<%= start %>
+							<%= data.start %>
 						</div>
 					</li>
 					<li class="list-group-item d-flex justify-content-between align-items-start">
 						<div class="ms-2 me-auto">
 							<div class="fw-bold">Fecha y hora de termino</div>
-							<%= end %>
-						</div>
-					</li>
-				</ul>
-				<br />
-
-				<div class="alert alert-warning" role="alert">Información de solicitud</div>
-				<ul class="list-group">
-					<li class="list-group-item d-flex justify-content-between align-items-start">
-						<div class="ms-2 me-auto">
-							<div class="fw-bold">Agencia</div>
-							FCL
+							<%= data.end %>
 						</div>
 					</li>
 				</ul>
@@ -51,34 +40,54 @@
 					<li class="list-group-item d-flex justify-content-between align-items-start">
 						<div class="ms-2 me-auto">
 							<div class="fw-bold">Marca</div>
-							Huawei
+							<%= data.manufacturer %>
+						</div>
+					</li>
+					<li class="list-group-item d-flex justify-content-between align-items-start">
+						<div class="ms-2 me-auto">
+							<div class="fw-bold">Modelo</div>
+							<%= data.model %>
 						</div>
 					</li>
 					<li class="list-group-item d-flex justify-content-between align-items-start">
 						<div class="ms-2 me-auto">
 							<div class="fw-bold">Número de serie</div>
-							NS0123456789
+							<%= data.serialno %>
 						</div>
 					</li>
 					<li class="list-group-item d-flex justify-content-between align-items-start">
 						<div class="ms-2 me-auto">
 							<div class="fw-bold">IMEI</div>
-							012345678901234567
+							<%= data.imei %>
 						</div>
 					</li>
+				</ul>
+				<br />
+
+				<div class="alert alert-warning" role="alert">Información adicional</div>
+				<ul class="list-group">
+					<% for (let [key, value] of Object.entries(data.extras)) { %>
+						<li class="list-group-item d-flex justify-content-between align-items-start">
+							<div class="ms-2 me-auto">
+								<div class="fw-bold"><%= key %></div>
+								<%= value %>
+							</div>
+						</li>
+					<% } %>
 				</ul>
 
 				<hr />
 				<div class="alert alert-success" role="alert">Capturas de pantalla</div>
 
-				<% sessions.forEach(function(session){ %>
+				<% data.sessions.forEach(function(session){ %>
 				<div class="alert alert-secondary" role="alert">
 					Secuencia de capturas de pantalla: <%= session.id %>
 				</div>
 				<div class="d-flex justify-content-between flex-wrap">
-					<% for(let i = 1; i<session.count; i++){ %> <% const filename = `CAPTURA-${padLeft(i, 6)}.png` %>
+					<% for(let i = 1; i<session.count; i++){ %> 
+					<% const filename = `IMG-${funcs.padLeft(i, 6)}.png` %>
 					<div class="card mb-4">
-						<img src="<%= `${session.id}/${filename}` %>" class="d-block" alt="captura" height="600" />
+						<img src="<%= `${session.id}/${filename}` %>" class="d-block" alt="captura" height="750" />
 						<div class="card-body">
 							<p class="card-text text-center"><%= filename %></p>
 						</div>

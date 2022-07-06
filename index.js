@@ -7,7 +7,7 @@ import ScreenshotsManager from "./ScreenshotsManager.js";
 const main = async () => {
 	const presenter = new Presenter();
 	let exit = false;
-
+	
 	while (!exit) {
 		banner();
 		const answers = await inquirer.prompt([
@@ -30,7 +30,6 @@ const main = async () => {
 				exit = true;
 			}
 		} catch (error) {
-
 			console.log(error);
 			console.log(chalk.bold.red("Se perdió la conexión con el dispositivo"));
 			exit = true;
