@@ -25,6 +25,7 @@ const main = async () => {
 				presenter.addSession(session);
 			} else if (answers.action === "Generar reporte") {
 				presenter.run();
+				console.log(chalk.bold("Hecho..."));
 				exit = true;
 			} else if (answers.action === "Salir") {
 				exit = true;

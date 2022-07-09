@@ -1,45 +1,32 @@
 import ejs from "ejs";
 import fs from "fs";
 import { padLeft } from "./Util.js";
+import { BASE_DIR, APP_NAME, APP_VERSION, APP_REPO } from "./constants.js";
 import Adb from "./Adb.js";
-
-let extras = {
-	Agencia: "Agencia",
-	"Fecha de solicitud": "01/01/2022",
-};
-const dateOptions = {
-	weekday: "long",
-	year: "numeric",
-	month: "long",
-	day: "numeric",
-	hour: "numeric",
-	minute: "numeric",
-	second: "numeric",
-	timeZoneName: "short",
-};
 
 export default class Presenter {
 	constructor() {
-		this.start = new Date().toLocaleString("es-MX", dateOptions);
-		this.end = null;
 		this.sessions = [];
+		fs.existsSync(BASE_DIR) || fs.mkdirSync(BASE_DIR);
+		fs.existsSync(`${BASE_DIR}/extra`) || fs.mkdirSync(`${BASE_DIR}/extra`);
 	}
 
 	addSession = (session) => this.sessions.push(session);
 
 	run = () => {
 		const deviceProps = Adb.deviceProps();
-		this.end = new Date().toLocaleString("es-MX", dateOptions);
 
 		ejs.renderFile(
-			"report.ejs",
+			"ReportTemplate.ejs",
 			{
-				data: { start: this.start, end: this.end, sessions: this.sessions, extras: extras, ...deviceProps },
+				app: { name: APP_NAME, version: APP_VERSION, repo: APP_REPO },
+				device: deviceProps,
+				sessions: this.sessions,
 				funcs: { padLeft: padLeft },
 			},
 			(err, str) => {
 				if (err) throw err;
-				fs.writeFileSync("./report/index.html", str, { flag: "w" });
+				fs.writeFileSync(`./${BASE_DIR}/index.html`, str, { flag: "w" });
 			}
 		);
 	};

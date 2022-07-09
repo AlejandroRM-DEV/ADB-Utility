@@ -2,16 +2,13 @@ import crypto from "crypto";
 import fs from "fs";
 import inquirer from "inquirer";
 import { banner, padLeft } from "./Util.js";
+import { BASE_DIR } from "./constants.js";
 import Adb from "./Adb.js";
-
-const BASE_DIR = "report";
 
 export default class ScreenshotsManager {
 	constructor() {
 		this.count = 1;
 		this.id = crypto.randomUUID();
-
-		fs.existsSync(BASE_DIR) || fs.mkdirSync(BASE_DIR);
 		fs.mkdirSync(`${BASE_DIR}/${this.id}`);
 	}
 

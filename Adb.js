@@ -24,9 +24,9 @@ export default class Adb {
 		const dimensions = this.dimensions();
 		this.swipe({
 			x1: dimensions[0] * 0.5,
-			y1: dimensions[1] * 0.25,
+			y1: dimensions[1] * 0.5,
 			x2: dimensions[0] * 0.5,
-			y2: dimensions[1] * 0.5,
+			y2: dimensions[1] * 0.25,
 		});
 	};
 
@@ -36,7 +36,7 @@ export default class Adb {
 			x1: dimensions[0] * 0.5,
 			y1: dimensions[1] * 0.5,
 			x2: dimensions[0] * 0.5,
-			y2: dimensions[1] * 0.25,
+			y2: dimensions[1] * 0.75,
 		});
 	};
 
